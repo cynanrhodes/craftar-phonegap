@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="com.catchoom.craftar" version="0.5.1">
+    
+    <name>CraftAR</name>
+    <description>This plugin provides Image Recognition and Augmented Reality capabilities via the CraftAR service licensed by Catchoom Technologies.</description>
+    <author>Niels Snoeck, Antonio Quesada, Daniel Cabrera</author>
+    <keywords>catchoom,image recognition,IR,augmented reality,AR,cloud recognition service,crs, CraftAR</keywords>
+    <license>Apache 2.0</license>
+    <info>
+        This plugin allows you to create Image Recognition and Augmented Reality experiences in your Cordova application. It offers a full javascript interface to the CraftAR SDK so you can develop your application without adding a line of native code. For more information about the CraftAR service visit http://catchoom.com/product/craftar/augmented-reality-and-image-recognition/
+
+        To use this plugin you need to download the CraftAR Augmented Reality SDK for the platforms you want to support.
+            Android SDK: 
+                1. Install the plugin
+                2. Download the CraftAR Augmented Reality SDK for Android (http://catchoom.com/product/mobile-sdk/#download-mobile-sdk)
+                3. Extract the SDK and copy the contents of libs into platforms/android/libs in your project.
+            iOS SDK:
+                1. Install the plugin
+                2. Download the CraftAR Augmented Reality SDK for iOS (http://catchoom.com/product/mobile-sdk/#download-mobile-sdk)
+                3. open the xCode project for the platform ($> open platforms/ios/YOUR_PROJECT.xcodeproj)
+                4. Drag the CraftARSDK.framework and Pods.framework into the "Link with libraries" section of the project's main target
+                5. Drag the CraftARSDK.bundle into the project.
+
+        In order to get started with the plugin, we recommend you try the example app provided with it. The example can be found in the 
+        www folder corresponfing to each platform:
+             * For iOS: platforms/ios/www/craftar_example
+             * For Android platforms/android/assets/www/craftar_example
+
+        You just need to replace the contents of the project www folder with those from that example folder.
+    </info>
+        
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+	<js-module src="www/CraftARError.js" name="CraftARError">
+        <clobbers target="window.CraftARError" />
+    </js-module>
+        
+    <js-module src="www/CraftAR.js" name="CraftAR">
+        <clobbers target="window.CraftAR" />
+    </js-module>
+    
+    <asset src="www/CraftARView.js" target="CraftARView.js" />
+
+    <asset src="www_app/ar_overlay.html" target="craftar_example/ar_overlay.html" />
+    <asset src="www_app/index.html" target="craftar_example/index.html" />
+    <asset src="www_app/logo.png" target="craftar_example/logo.png" />
+
+    <platform name="ios">
+ 	    <config-file target="config.xml" parent="/*">
+                <feature name="CraftAR">
+                    <param name="ios-package" value="CraftARPlugin"/>
+                </feature>
+        </config-file>
+
+        <asset src="www/CraftARView-IOS.js" target="platforms/CraftARView-IOS.js" />
+        
+        <header-file src="src/ios/CraftARPlugin.h" />
+        <source-file src="src/ios/CraftARPlugin.m" />
+        <header-file src="src/ios/CraftARViewController.h" />
+        <source-file src="src/ios/CraftARViewController.m" />
+        <header-file src="src/ios/NSString+UrlDecode.h" />
+        <source-file src="src/ios/NSString+UrlDecode.m" />
+        <header-file src="src/ios/MyCRSConnect.h" />
+        <source-file src="src/ios/MyCRSConnect.m" />
+
+       <!-- <framework src="src/ios/Frameworks/Pods.framework" custom="true"  /> -->
+       <!-- <framework src="src/ios/Frameworks/CatchoomSDK.framework"  custom="true" /> -->
+        <framework src="AudioToolbox.framework" />
+        <framework src="CoreMedia.framework" />
+        <framework src="SystemConfiguration.framework" />
+        <framework src="AVFoundation.framework" />
+        <framework src="libstdc++.dylib" />
+        <framework src="libc++.dylib" />
+        <framework src="CoreLocation.framework" />
+        <framework src="AssetsLibrary.framework" />
+        <framework src="CoreGraphics.framework" />
+        <framework src="MobileCoreServices.framework" />
+
+        <!-- <resource-file src="src/ios/Frameworks/CatchoomSDK.bundle" /> -->
+        <resource-file src="src/ios/CraftAR.storyboard" />
+
+     </platform>
+    
+    <platform name="android">
+                
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-feature android:name="android.hardware.camera.autofocus" />            
+        </config-file>
+        
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <!--  Activities' screen orientation is fixed to prevent CraftAR crashes during screen orientation change -->
+            <activity
+                android:name="com.catchoom.craftar.CraftARCordovaActivity"
+                android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+                android:screenOrientation="portrait"
+                android:configChanges="orientation|keyboardHidden" >                                    
+            </activity>
+        </config-file>
+                       
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="CraftAR" >
+                <param name="android-package" value="com.catchoom.craftar.CraftARPlugin" />
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/res/drawable/ic_btn_camera.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable-hdpi/ic_btn_camera_normal.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/res/drawable-hdpi/ic_btn_camera_pressed.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/res/drawable-mdpi/ic_btn_camera_normal.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/ic_btn_camera_pressed.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/ic_btn_camera_normal.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/ic_btn_camera_pressed.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xxhdpi/ic_btn_camera_normal.png" target-dir="res/drawable-xxhdpi" />
+        <source-file src="src/android/res/drawable-xxhdpi/ic_btn_camera_pressed.png" target-dir="res/drawable-xxhdpi" />
+        <source-file src="src/android/res/drawable-xxxhdpi/ic_btn_camera_normal.png" target-dir="res/drawable-xxxhdpi" />
+        <source-file src="src/android/res/drawable-xxxhdpi/ic_btn_camera_pressed.png" target-dir="res/drawable-xxxhdpi" />
+        
+        <source-file src="src/android/res/layout/craftar_camera.xml" target-dir="res/layout" />
+        
+        <source-file src="src/android/src/com/catchoom/craftar/CraftARCordovaActivity.java" target-dir="src/com/catchoom/craftar" />
+        <source-file src="src/android/src/com/catchoom/craftar/CraftARJSInterface.java" target-dir="src/com/catchoom/craftar" />
+        <source-file src="src/android/src/com/catchoom/craftar/CraftARIntent.java" target-dir="src/com/catchoom/craftar" />
+        <source-file src="src/android/src/com/catchoom/craftar/CraftARPlugin.java" target-dir="src/com/catchoom/craftar" />
+        <source-file src="src/android/src/com/catchoom/craftar/FakeR.java" target-dir="src/com/catchoom/craftar" />
+        
+    </platform>
+        
+</plugin>
