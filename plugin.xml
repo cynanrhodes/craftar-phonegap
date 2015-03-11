@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        id="com.catchoom.craftar" version="0.5.3">
+        id="com.catchoom.craftar" version="0.5.4">
     
     <name>CraftAR</name>
     <description>This plugin provides Image Recognition and Augmented Reality capabilities via the CraftAR service licensed by Catchoom Technologies.</description>

@@ -379,7 +379,7 @@ public void setSearchUrl(String searchUrl)
             else if ([(NSString *)[components objectAtIndex:1] isEqualToString:@"//close"]){
                 [self close];
                 b = NO;
-            } else if ([(NSString *) [components objectAtIndex:1] rangeOfString:@"//setToken?p="].location != NSNotFound)){
+            } else if ([(NSString *) [components objectAtIndex:1] rangeOfString:@"//setToken?p="].location != NSNotFound){
                 NSArray *paramsComponents = [(NSString *)[components objectAtIndex:1] componentsSeparatedByString:@"="];
                 NSString *token = (NSString *)[paramsComponents objectAtIndex:1];
                 [self setToken:[token stringByDecodingURLFormat]];
