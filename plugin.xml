@@ -129,7 +129,19 @@
         <source-file src="src/android/src/com/catchoom/craftar/CraftARIntent.java" target-dir="src/com/catchoom/craftar" />
         <source-file src="src/android/src/com/catchoom/craftar/CraftARPlugin.java" target-dir="src/com/catchoom/craftar" />
         <source-file src="src/android/src/com/catchoom/craftar/FakeR.java" target-dir="src/com/catchoom/craftar" />
-        
+
+        <source-file src="sdk/android-tracking-sdk.jar" target-dir="libs" />
+        <source-file src="sdk/android-tracking-sdk.jar.properties" target-dir="libs" />
+        <source-file src="sdk/gcm.jar" target-dir="libs" />
+        <source-file src="sdk/ofandroidlib.jar" target-dir="libs" />
+        <source-file src="sdk/sanselan-0.97-incubator.jar" target-dir="libs" />
+
+        <source-file src="sdk/armeabi-v7a/gdb.setup" target-dir="libs/armeabi-v7a" />
+        <source-file src="sdk/armeabi-v7a/gdbserver" target-dir="libs/armeabi-v7a" />
+        <source-file src="sdk/armeabi-v7a/libCraftARSDK.so" target-dir="libs/armeabi-v7a" />
+        <source-file src="sdk/armeabi-v7a/libCraftARSDK_neon.so" target-dir="libs/armeabi-v7a" />
+        <source-file src="sdk/armeabi-v7a/libneondetection.so" target-dir="libs/armeabi-v7a" />
+        <source-file src="sdk/armeabi-v7a/libtrack.so" target-dir="libs/armeabi-v7a" />
     </platform>
         
 </plugin>
