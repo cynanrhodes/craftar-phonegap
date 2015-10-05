@@ -4,12 +4,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.apache.cordova.Config;
-import org.apache.cordova.CordovaChromeClient;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.CordovaWebViewClient;
-import org.apache.cordova.IceCreamCordovaWebViewClient;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import org.apache.cordova.engine.SystemWebView;
+import org.apache.cordova.engine.SystemWebViewClient;
+import org.apache.cordova.engine.SystemWebViewEngine;
+import org.apache.cordova.engine.SystemWebChromeClient;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -33,7 +36,7 @@ public class CraftARCordovaActivity extends CraftARActivity implements CordovaIn
 	// Result code for an activity error response	 	 
 	public static final int RESULT_ERROR = Activity.RESULT_FIRST_USER;
 
-	public CordovaWebView cwv;
+	public SystemWebView cwv;
 
 	private CraftARJSInterface craftARInterface; 
 
@@ -65,24 +68,20 @@ public class CraftARCordovaActivity extends CraftARActivity implements CordovaIn
 			super.setCameraView(cameraView);
 
 			int cwvId = fakeR.getId("id", "OverlayView");
-			cwv = new CordovaWebView(this);
+			cwv = new SystemWebView(this);
 
-			CordovaWebViewClient cwvc; 
+			WebViewClient cwvc; 
+			SystemWebViewEngine engine;
 
-			if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-				cwvc = new CordovaWebViewClient(this, cwv);
-			} else {
-				cwvc = new IceCreamCordovaWebViewClient(this, cwv);
-			}
+			engine = new SystemWebViewEngine(cwv);
+			cwvc = new SystemWebViewClient(engine);
 
 			cwv.setWebViewClient(cwvc);
-			cwv.setWebChromeClient(new CordovaChromeClient(this, cwv));
+			cwv.setWebChromeClient(new SystemWebChromeClient(engine));
 
 			FrameLayout wvLayout = (FrameLayout) layout.findViewById(cwvId);
 			wvLayout.addView(cwv);
 			Config.init(this);
-
-			cwv.handleResume(true, true);
 
 			craftARInterface = new CraftARJSInterface(this);
 			cwv.addJavascriptInterface(craftARInterface,"craftarjs");
